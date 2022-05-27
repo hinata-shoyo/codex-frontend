@@ -6,7 +6,7 @@ import Link from '../Link';
 
 export default function NotificationPaneDisplayText({
   currentNotificationSchema,
-  usrName,
+  userName,
   userNameGuid,
   user1Name,
   user2Name,
@@ -24,7 +24,7 @@ export default function NotificationPaneDisplayText({
         userName: (
           <span>
             <Link newTab href={`/users/${userNameGuid}`}>
-              {usrName}
+              {userName}
             </Link>
           </span>
         ),

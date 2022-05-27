@@ -29,7 +29,7 @@ export default function NotificationDetailsDialog({
   };
 
   const {
-    usrName,
+    userName,
     userNameGuid,
     user1Name,
     user2Name,
@@ -54,7 +54,7 @@ export default function NotificationDetailsDialog({
             userName: (
               <span>
                 <Link newTab href={`/users/${userNameGuid}`}>
-                  {usrName}
+                  {userName}
                 </Link>
               </span>
             ),

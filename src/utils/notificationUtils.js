@@ -5,7 +5,7 @@ import { formatDateCustom } from './formatters';
 
 export const getNotificationProps = notification => {
   const intl = useIntl();
-  const usrName = notification?.sender_name || 'Unnamed User';
+  const userName = notification?.sender_name || 'Unnamed User';
   const userNameGuid = notification?.sender_guid;
   const user1Name =
     notification?.message_values?.user1_name || 'Unnamed User';
@@ -35,7 +35,7 @@ export const getNotificationProps = notification => {
     ? formatDateCustom(deadline, 'LLLL do')
     : intl.formatMessage({ id: 'DATE_MISSING' });
   return {
-    usrName,
+    userName,
     userNameGuid,
     user1Name,
     user2Name,
