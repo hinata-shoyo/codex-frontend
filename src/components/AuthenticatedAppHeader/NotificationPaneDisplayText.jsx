@@ -10,7 +10,7 @@ export default function NotificationPaneDisplayText({
   userNameGuid,
   user1Name,
   user2Name,
-  yourIndName,
+  youIndividualName,
   yourIndividualGuid,
   theirIndName,
   theirIndividualGuid,
@@ -33,7 +33,7 @@ export default function NotificationPaneDisplayText({
         yourIndividualName: (
           <span>
             <Link newTab href={`/individuals/${yourIndividualGuid}`}>
-              {yourIndName}
+              {youIndividualName}
             </Link>
           </span>
         ),

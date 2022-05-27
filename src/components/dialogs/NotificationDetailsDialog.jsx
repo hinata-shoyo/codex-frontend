@@ -33,7 +33,7 @@ export default function NotificationDetailsDialog({
     userNameGuid,
     user1Name,
     user2Name,
-    yourIndName,
+    youIndividualName,
     yourIndividualGuid,
     theirIndName,
     theirIndividualGuid,
@@ -66,7 +66,7 @@ export default function NotificationDetailsDialog({
                   newTab
                   href={`/individuals/${yourIndividualGuid}`}
                 >
-                  {yourIndName}
+                  {youIndividualName}
                 </Link>
               </span>
             ),

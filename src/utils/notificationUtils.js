@@ -24,7 +24,7 @@ export const getNotificationProps = notification => {
     '0',
     'guid',
   ]);
-  const yourIndName =
+  const youIndividualName =
     notification?.message_values?.target_individual_name ||
     'Unnamed Individual';
   const yourIndividualGuid =
@@ -39,7 +39,7 @@ export const getNotificationProps = notification => {
     userNameGuid,
     user1Name,
     user2Name,
-    yourIndName,
+    youIndividualName,
     yourIndividualGuid,
     theirIndName,
     theirIndividualGuid,

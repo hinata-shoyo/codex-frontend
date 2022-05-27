@@ -93,7 +93,7 @@ export default function Notifications() {
                   userNameGuid,
                   user1Name,
                   user2Name,
-                  yourIndName,
+                  youIndividualName,
                   yourIndividualGuid,
                   theirIndName,
                   theirIndividualGuid,
@@ -137,7 +137,7 @@ export default function Notifications() {
                               newTab
                               href={`/individuals/${yourIndividualGuid}`}
                             >
-                              {yourIndName}
+                              {youIndividualName}
                             </Link>
                           </span>
                         ),

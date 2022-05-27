@@ -83,7 +83,7 @@ export default function NotificationsPane({
                 userNameGuid,
                 user1Name,
                 user2Name,
-                yourIndName,
+                youIndividualName,
                 yourIndividualGuid,
                 theirIndName,
                 theirIndividualGuid,
@@ -126,7 +126,7 @@ export default function NotificationsPane({
                         userNameGuid={userNameGuid}
                         user1Name={user1Name}
                         user2Name={user2Name}
-                        yourIndName={yourIndName}
+                        youIndividualName={youIndividualName}
                         yourIndividualGuid={yourIndividualGuid}
                         theirIndName={theirIndName}
                         theirIndividualGuid={theirIndividualGuid}
