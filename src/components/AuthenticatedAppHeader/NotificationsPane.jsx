@@ -79,7 +79,7 @@ export default function NotificationsPane({
                 currentNotificationSchema?.showNotificationDialog &&
                 refreshNotifications !== undefined;
               const {
-                usrName,
+                userName,
                 userNameGuid,
                 user1Name,
                 user2Name,
@@ -122,7 +122,7 @@ export default function NotificationsPane({
                         currentNotificationSchema={
                           currentNotificationSchema
                         }
-                        usrName={usrName}
+                        userName={userName}
                         userNameGuid={userNameGuid}
                         user1Name={user1Name}
                         user2Name={user2Name}
