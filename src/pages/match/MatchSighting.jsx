@@ -119,11 +119,19 @@ export default function MatchSighting() {
       const individualGuid1 = deriveIndividualGuid(
         selectedQueryAnnotation,
       );
+      console.log('deleteMe individualGuid1 is: ');
+      console.log(individualGuid1);
       const individualGuid2 = deriveIndividualGuid(
         selectedMatchCandidate,
       );
+      console.log('deleteMe individualGuid2 is: ');
+      console.log(individualGuid2);
       const encounterGuid1 = selectedQueryAnnotation?.encounter_guid;
+      console.log('deleteMe encounterGuid1 is: ');
+      console.log(encounterGuid1);
       const encounterGuid2 = selectedMatchCandidate?.encounter_guid;
+      console.log('deleteMe encounterGuid2 is: ');
+      console.log(encounterGuid2);
       if (individualGuid1 && individualGuid2) {
         return `/merge?i=${individualGuid1}&i=${individualGuid2}`;
       } else if (individualGuid1 || individualGuid2) {
@@ -131,6 +139,8 @@ export default function MatchSighting() {
         const encounterGuid = individualGuid1
           ? encounterGuid2
           : encounterGuid1;
+        console.log('deleteMe encounterGuid is: ');
+        console.log(encounterGuid);
         return `/assign-annotations?i=${individualGuid}&e=${encounterGuid}`;
       } else {
         return `/create-individual?e=${encounterGuid1}&e=${encounterGuid2}`;
