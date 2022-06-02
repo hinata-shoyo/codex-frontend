@@ -78,6 +78,8 @@ export default function GeneralSettings() {
     currentValues,
     'intelligent_agent_twitterbot_enabled',
   );
+  console.log('deleteMe isTwitterDisabled is: ');
+  console.log(isTwitterDisabled);
 
   const {
     mutate: putSiteSettings,
@@ -331,6 +333,8 @@ export default function GeneralSettings() {
                   };
                 }
               });
+              console.log('deleteMe currentValues are: ');
+              console.log(currentValues);
               putSiteSettings({ data: currentValues });
               if (logoPostData)
                 postSettingsAsset({
