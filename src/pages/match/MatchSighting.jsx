@@ -116,6 +116,8 @@ export default function MatchSighting() {
 
   const confirmMatchHref = useMemo(
     () => {
+      console.log('deleteMe selectedMatchCandidate is: ');
+      console.log(selectedMatchCandidate);
       const individualGuid1 = deriveIndividualGuid(
         selectedQueryAnnotation,
       );
@@ -191,6 +193,9 @@ export default function MatchSighting() {
   const sightingIsReviewed = Boolean(sightingData?.review_time);
   const matchPossible =
     selectedMatchCandidate && selectedQueryAnnotation;
+
+  console.log('deleteMe confirmMatchHref is: ');
+  console.log(confirmMatchHref);
 
   return (
     <MainColumn
