@@ -65,6 +65,8 @@ const allSettingsFields = [
 
 export default function GeneralSettings() {
   const siteSettings = useSiteSettings();
+  console.log('deleteMe siteSettings are: ');
+  console.log(siteSettings);
 
   const [currentValues, setCurrentValues] = useState(null);
   const [logoPostData, setLogoPostData] = useState(null);
