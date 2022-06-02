@@ -123,7 +123,7 @@ export default function GeneralSettings() {
   console.log(allSettingsFields);
   const edmValues = allSettingsFields.map(fieldKey =>
     get(siteSettings, ['data', fieldKey, 'value']),
-  );
+  ); // TODO modify the booleans to cast a boolean value
   useEffect(() => {
     setCurrentValues(zipObject(allSettingsFields, edmValues));
   }, edmValues);
