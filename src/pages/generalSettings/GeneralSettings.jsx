@@ -119,6 +119,8 @@ export default function GeneralSettings() {
     [twitterTestResults, twitterStatusCode],
   );
 
+  console.log('deleteMe allSettingsFields are: ');
+  console.log(allSettingsFields);
   const edmValues = allSettingsFields.map(fieldKey =>
     get(siteSettings, ['data', fieldKey, 'value']),
   );
@@ -333,6 +335,7 @@ export default function GeneralSettings() {
                   };
                 }
               });
+
               console.log('deleteMe currentValues are: ');
               console.log(currentValues);
               putSiteSettings({ data: currentValues });
