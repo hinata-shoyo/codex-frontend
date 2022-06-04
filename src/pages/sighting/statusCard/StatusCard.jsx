@@ -65,6 +65,8 @@ export default function StatusCard({ sightingData }) {
 
   const photoCount = get(sightingData, ['assets', 'length'], 0);
   const dateCreated = get(sightingData, 'createdHouston');
+  console.log('deleteMe sightingData is: ');
+  console.log(sightingData);
   const hasEditPermission = get(sightingData, 'hasEdit', false);
 
   const {
