@@ -77,8 +77,11 @@ export default function SightingCore({
   } = useDeleteAssetGroupSighting();
 
   const handleDeleteSightingOnClearError = () => {
+    console.log('deleteMe handleDeleteSightingOnClearError called');
     deleteSightingOnClearError();
     sightingDeleteError = null;
+    console.log('deleteMe sightingDeleteError is now: ');
+    console.log(sightingDeleteError);
   };
 
   const onClearError = pending
