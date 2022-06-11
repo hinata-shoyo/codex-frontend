@@ -175,7 +175,7 @@ export default function SightingCore({
         }
         alertSeverity={vulnerableIndividual ? 'warning' : 'error'}
         onClearError={onClearError}
-        messageId={'SIGHTING_DELETE_VULNERABLE_INDIVIDUAL_MESSAGE'}
+        messageId={'CONFIRM_DELETE_SIGHTING_DESCRIPTION'}
       />
       <SightingEntityHeader
         activeTab={activeTab}
@@ -183,8 +183,10 @@ export default function SightingCore({
         loading={loading}
         pending={pending}
         preparing={isPreparationInProgress}
-        guid={id} // setHistoryOpen={setHistoryOpen}
-        setDeleteDialogOpen={setDeleteDialogOpen}
+        guid={id}
+        setDeleteDialogOpen={
+          setDeleteDialogOpen // setHistoryOpen={setHistoryOpen}
+        }
       />
       {isPreparationInProgress ? (
         <CustomAlert
