@@ -63,14 +63,11 @@ export default function SightingCore({
     onClearVulnerableIndividual,
   } = useDeleteSighting();
 
-  const sightingDeleteError = vulnerableIndividual
+  let sightingDeleteError = vulnerableIndividual
     ? intl.formatMessage({
         id: 'SIGHTING_DELETE_VULNERABLE_INDIVIDUAL_MESSAGE',
       })
     : deleteSightingError;
-
-  console.log('deleteMe sightingDeleteError is: ');
-  console.log(sightingDeleteError);
 
   const {
     deleteAssetGroupSighting,
@@ -79,9 +76,14 @@ export default function SightingCore({
     onClearError: deleteAsgOnClearError,
   } = useDeleteAssetGroupSighting();
 
+  const handleDeleteSightingOnClearError = () => {
+    deleteSightingOnClearError();
+    sightingDeleteError = null;
+  };
+
   const onClearError = pending
     ? deleteAsgOnClearError
-    : deleteSightingOnClearError;
+    : handleDeleteSightingOnClearError;
 
   /*
   known issue: if data or fieldschemas change values
