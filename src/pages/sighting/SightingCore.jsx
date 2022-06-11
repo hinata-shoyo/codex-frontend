@@ -1,4 +1,6 @@
 import React, { useMemo, useState } from 'react';
+
+import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import { get } from 'lodash-es';
 import { useQueryClient } from 'react-query';
@@ -40,6 +42,7 @@ export default function SightingCore({
   pending,
   id,
 }) {
+  const intl = useIntl();
   const history = useHistory();
   const queryClient = useQueryClient();
 
@@ -59,6 +62,13 @@ export default function SightingCore({
     vulnerableIndividual,
     onClearVulnerableIndividual,
   } = useDeleteSighting();
+
+  const sightingDeleteError = vulnerableIndividual
+    ? intl.formatMessage({
+        id: 'SIGHTING_DELETE_VULNERABLE_INDIVIDUAL_MESSAGE',
+      })
+    : deleteSightingError;
+
   const {
     deleteAssetGroupSighting,
     isLoading: deleteAgsInProgress,
@@ -153,7 +163,7 @@ export default function SightingCore({
         error={
           pending
             ? deleteAssetGroupSightingError
-            : deleteSightingError
+            : sightingDeleteError
         }
         errorTitleId={
           vulnerableIndividual
@@ -162,11 +172,7 @@ export default function SightingCore({
         }
         alertSeverity={vulnerableIndividual ? 'warning' : 'error'}
         onClearError={onClearError}
-        messageId={
-          vulnerableIndividual
-            ? 'SIGHTING_DELETE_VULNERABLE_INDIVIDUAL_MESSAGE'
-            : 'CONFIRM_DELETE_SIGHTING_DESCRIPTION'
-        }
+        messageId={'SIGHTING_DELETE_VULNERABLE_INDIVIDUAL_MESSAGE'}
       />
       <SightingEntityHeader
         activeTab={activeTab}
@@ -174,8 +180,7 @@ export default function SightingCore({
         loading={loading}
         pending={pending}
         preparing={isPreparationInProgress}
-        guid={id}
-        // setHistoryOpen={setHistoryOpen}
+        guid={id} // setHistoryOpen={setHistoryOpen}
         setDeleteDialogOpen={setDeleteDialogOpen}
       />
       {isPreparationInProgress ? (
