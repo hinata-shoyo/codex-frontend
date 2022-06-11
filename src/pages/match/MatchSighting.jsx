@@ -46,6 +46,9 @@ export default function MatchSighting() {
     error: matchResultsError,
   } = useMatchResults(sightingGuid);
 
+  console.log('deleteMe matchResults are: ');
+  console.log(matchResults);
+
   const [
     selectedQueryAnnotation,
     setSelectedQueryAnnotation,
