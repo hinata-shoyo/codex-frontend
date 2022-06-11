@@ -69,6 +69,9 @@ export default function SightingCore({
       })
     : deleteSightingError;
 
+  console.log('deleteMe sightingDeleteError is: ');
+  console.log(sightingDeleteError);
+
   const {
     deleteAssetGroupSighting,
     isLoading: deleteAgsInProgress,
