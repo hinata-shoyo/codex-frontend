@@ -1,3 +1,5 @@
+import { get } from 'lodash-es';
+
 import useFetch from '../../hooks/useFetch';
 import { getUserSightingsQueryKey } from '../../constants/queryKeys';
 
@@ -19,5 +21,9 @@ export default function useGetUserSightings(userGuid) {
     queryOptions: {
       enabled: Boolean(userGuid),
     },
+    dataAccessor: result => ({
+      resultCount: get(result, ['data', 'headers', 'x-total-count']),
+      searchResults: get(result, ['data', 'data'], []),
+    }),
   });
 }

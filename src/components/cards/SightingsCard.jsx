@@ -14,6 +14,8 @@ import { cellRendererTypes } from '../dataDisplays/cellRenderers';
 import DataDisplay from '../dataDisplays/DataDisplay';
 import Card from './Card';
 import SightingMapView from './SightingMapView';
+import Link from '../Link';
+import Text from '../Text';
 
 export default function SightingsCard({
   title,
@@ -24,7 +26,10 @@ export default function SightingsCard({
   linkPath = 'sightings',
   noSightingsMsg = 'NO_SIGHTINGS',
   loading,
+  totalSightings,
 }) {
+  console.log('deleteMe totalSightings is: ');
+  console.log(totalSightings);
   const [showMapView, setShowMapView] = useState(false);
   const theme = useTheme();
   const { regionOptions } = useOptions();
@@ -149,6 +154,7 @@ export default function SightingsCard({
           data={sightings}
           loading={loading}
           noResultsTextId={noSightingsMsg}
+          style={{ marginBottom: 10 }}
         />
       )}
       {!noSightings && showMapView && (
@@ -157,6 +163,13 @@ export default function SightingsCard({
           linkPath={linkPath}
         />
       )}
+      <Link>
+        <Text
+          variant="caption"
+          id="SEE_ALL_SIGHTINGS"
+          values={{ totalSightings: totalSightings }}
+        ></Text>
+      </Link>
     </Card>
   );
 }

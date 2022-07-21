@@ -30,6 +30,7 @@ export default function UserProfile({
 }) {
   const { data: sightingsData, loading: sightingsLoading } =
     useGetUserSightings(userId);
+  const { searchResults, resultCount } = sightingsData;
   const intl = useIntl();
   const [editingProfile, setEditingProfile] = useState(false);
   const metadataSchemas = useUserMetadataSchemas(userId);
@@ -161,10 +162,13 @@ export default function UserProfile({
               'actions',
             ]}
             hideSubmitted
-            sightings={sightingsData || []}
+            sightings={searchResults || []}
             loading={sightingsLoading}
             noSightingsMsg={
               someoneElse ? 'NO_SIGHTINGS_NON_SELF' : 'NO_SIGHTINGS'
+            }
+            totalSightings={
+              resultCount || intl.formatMessage({ id: 'LOADING' })
             }
           />
           {!someoneElse && (
