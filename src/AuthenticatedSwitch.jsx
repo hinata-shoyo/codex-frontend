@@ -33,6 +33,7 @@ import FourOhFour from './pages/fourohfour/FourOhFour';
 import useSiteSettings from './models/site/useSiteSettings';
 import SearchIndividuals from './pages/individual/SearchIndividuals';
 import SearchSightings from './pages/sighting/SearchSightings';
+import SearchSightingsForUser from './pages/sighting/SearchSightingsForUser';
 import SiteSetup from './pages/setup/SiteSetup';
 import MatchSighting from './pages/match/MatchSighting';
 import AuditLog from './pages/devTools/AuditLog';
@@ -162,6 +163,9 @@ export default function AuthenticatedSwitch({
                       </Route>
                       <Route path="/sightings">
                         <SearchSightings />
+                      </Route>
+                      <Route path="/sightings-for-user/:id">
+                        <SearchSightingsForUser />
                       </Route>
                       <Route path="/match-results/:sightingGuid">
                         <MatchSighting />

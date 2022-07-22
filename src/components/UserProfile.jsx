@@ -144,6 +144,8 @@ export default function UserProfile({
                 : 'NO_PENDING_SIGHTINGS'
             }
             loading={agsLoading}
+            userId={userId}
+            // style={{ position: 'relative' }}
           />
           <SightingsCard
             id="sightings-card"
@@ -170,6 +172,7 @@ export default function UserProfile({
             totalSightings={
               resultCount || intl.formatMessage({ id: 'LOADING' })
             }
+            // style={{ position: 'relative' }}
           />
           {!someoneElse && (
             <CollaborationsCard
