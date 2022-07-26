@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 // import { get } from 'lodash-es';
 
 // import { formatDate } from '../../utils/formatters';
@@ -13,6 +14,7 @@ export default function IndividualsDisplay({
   dataCount,
   ...rest
 }) {
+  const intl = useIntl();
   const title = dataCount
     ? `${dataCount} matching individuals`
     : 'Matching individuals';
@@ -26,7 +28,8 @@ export default function IndividualsDisplay({
       options: {
         customBodyRender: (firstName, individual) => (
           <Link to={`/individuals/${individual?.guid}`}>
-            {firstName || 'Unnamed individual'}
+            {firstName ||
+              intl.formatMessage({ id: 'UNNAMED_INDIVIDUAL' })}
           </Link>
         ),
       },

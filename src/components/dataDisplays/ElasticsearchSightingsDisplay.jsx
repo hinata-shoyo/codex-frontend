@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import { get } from 'lodash-es';
 
 import ActionIcon from '../ActionIcon';
@@ -12,6 +13,7 @@ export default function ElasticsearchSightingsDisplay({
   dataCount,
   ...rest
 }) {
+  const intl = useIntl();
   const title = `${dataCount || sightings.length} matching sightings`;
 
   const tableData = sightings.map(sighting => {
@@ -60,7 +62,7 @@ export default function ElasticsearchSightingsDisplay({
           const ownerName = get(
             owners,
             [0, 'full_name'],
-            'Unknown User',
+            intl.formatMessage({ id: 'UNKNOWN_USER' }),
           );
           const ownerGuid = get(owners, [0, 'guid']);
           return (

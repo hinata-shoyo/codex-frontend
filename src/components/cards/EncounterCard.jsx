@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useIntl } from 'react-intl';
 import { get } from 'lodash-es';
 
 import Paper from '@material-ui/core/Paper';
@@ -16,8 +17,11 @@ import {
 } from '../../utils/formatters';
 
 export default function EncounterCard({ encounterGuid }) {
-  const { data: siteSettings, siteSettingsVersion } =
-    useSiteSettings();
+  const intl = useIntl();
+  const {
+    data: siteSettings,
+    siteSettingsVersion,
+  } = useSiteSettings();
 
   const regionChoices = useMemo(
     () =>
@@ -34,7 +38,7 @@ export default function EncounterCard({ encounterGuid }) {
   const sightingOwner = get(
     data,
     ['owner', 'full_name'],
-    'Unknown User',
+    intl.formatMessage({ id: 'UNKNOWN_USER' }),
   );
   const ownerGuid = get(data, ['owner', 'guid']);
   const sightingTime = formatSpecifiedTime(

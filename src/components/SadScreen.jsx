@@ -15,27 +15,30 @@ export default function SadScreen({
 }) {
   const theme = useTheme();
 
-  const errorSchema = useMemo(() => {
-    let displayVariant = variant || errorTypes.genericError;
-    if (statusCode === 404) {
-      displayVariant = errorTypes.notFound;
-    } else if (statusCode === 403) {
-      displayVariant = errorTypes.noPermissions;
-    } else if (statusCode === 401) {
-      displayVariant = errorTypes.notAuthenticated;
-    }
-    const propOverrides = pickBy(rest, prop => prop !== undefined);
-    const variantSpecificOverrides = get(
-      variantOverrides,
-      displayVariant,
-      {},
-    );
-    return {
-      ...errorSchemas[displayVariant],
-      ...propOverrides,
-      ...variantSpecificOverrides,
-    };
-  }, [statusCode, variant]);
+  const errorSchema = useMemo(
+    () => {
+      let displayVariant = variant || errorTypes.genericError;
+      if (statusCode === 404) {
+        displayVariant = errorTypes.notFound;
+      } else if (statusCode === 403) {
+        displayVariant = errorTypes.noPermissions;
+      } else if (statusCode === 401) {
+        displayVariant = errorTypes.notAuthenticated;
+      }
+      const propOverrides = pickBy(rest, prop => prop !== undefined);
+      const variantSpecificOverrides = get(
+        variantOverrides,
+        displayVariant,
+        {},
+      );
+      return {
+        ...errorSchemas[displayVariant],
+        ...propOverrides,
+        ...variantSpecificOverrides,
+      };
+    },
+    [statusCode, variant],
+  );
 
   return (
     <div
@@ -88,16 +91,21 @@ export default function SadScreen({
           color: theme.palette.common.white,
         }}
       >
-        <Text>
-          {'Photo by '}
-          <Link external href={errorSchema.artistUrl}>
-            {errorSchema.artistName}
-          </Link>
-          {' on '}
-          <Link external href={errorSchema.photoUrl}>
-            Unsplash
-          </Link>
-        </Text>
+        <Text
+          id="PHOTO_BY_ON"
+          values={{
+            artistNameWithLink: (
+              <Link external href={errorSchema.artistUrl}>
+                {errorSchema.artistName}
+              </Link>
+            ),
+            photoHostWithLink: (
+              <Link external href={errorSchema.photoUrl}>
+                <Text id="UNSPLASH" />
+              </Link>
+            ),
+          }}
+        />
       </div>
     </div>
   );

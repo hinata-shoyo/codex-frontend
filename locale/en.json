@@ -805,8 +805,6 @@
   "IDENTIFYING_INDIVIDUALS": "Identifying Individuals",
   "IDENTIFYING_INDIVIDUALS_DESCRIPTION": "Our servers are hard at work identifying the individuals in your photographs. You can monitor their progress here.",
   "PHOTOS_READY_COUNT": "{finished} / {total} photos ready",
-  "PHOTO_BY": "Photo by ",
-  "ON": " on ",
   "STATUS": "Status",
   "FILTERS": "Filters",
   "RESTORE_DELETED_ENCOUNTER": "Restore a deleted encounter",
@@ -1148,5 +1146,8 @@
   "ONE_OR_MORE_ROLES_MISSING_LABELS": "One or more roles are missing labels",
   "TWO_OR_MORE_ROLES_SAME_LABEL": "Two or more roles have the same label. Make sure each label is different",
   "ROLE_GUID_MISSING": "Role is missing ID",
-  "UNFINISHED_OPTIONS": "Options must have valid values and labels and unique values"
+  "UNFINISHED_OPTIONS": "Options must have valid values and labels and unique values",
+  "PHOTO_BY_ON": "Photo by {artistNameWithLink} on {photoHostWithLink}",
+  "UNSPLASH": "Unsplash",
+  "UNKNOWN_USER": "Unknown User"
 }

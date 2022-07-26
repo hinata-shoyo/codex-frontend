@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { get } from 'lodash-es';
 
 import List from '@material-ui/core/List';
@@ -15,6 +15,7 @@ import SearchButton from './SearchButton';
 import SearchResult from './SearchResult';
 
 export default function SightingsButton() {
+  const intl = useIntl();
   const [inputContent, setInputContent] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -67,7 +68,7 @@ export default function SightingsButton() {
               const ownerName = get(
                 sighting,
                 ['owners', 0, 'full_name'],
-                'Unknown User',
+                intl.formatMessage({ id: 'UNKNOWN_USER' }),
               );
               const regionLabel = sighting?.locationId_value;
               const createdDate = formatDate(sighting?.created, true);
