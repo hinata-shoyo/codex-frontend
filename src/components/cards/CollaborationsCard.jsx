@@ -56,7 +56,7 @@ export default function CollaborationsCard({
       thisUserData.viewState === 'pending' ||
       otherUserData.viewState === 'pending'
     ) {
-      teamViewState = 'Pending';
+      teamViewState = 'Pending'; //TODO DEX-1219 and check the rest of this page. Not sure.
     }
     if (
       thisUserData.editState === 'pending' ||
@@ -87,7 +87,7 @@ export default function CollaborationsCard({
       otherUserName:
         get(otherUserData, 'full_name') || 'Unnamed User',
       otherUserId: get(otherUserData, 'guid', ''),
-    };
+    }; //TODO DEX-1219
   });
 
   const columns = [

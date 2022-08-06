@@ -56,16 +56,13 @@ export default function NotificationsPane({
   const theme = useTheme();
   const closePopover = () => setAnchorEl(null);
 
-  const name = get(userData, 'full_name') || 'Unnamed user';
+  const name = get(userData, 'full_name') || 'Unnamed user'; //TODO DEX-1219
   const profileSrc = get(userData, ['profile_fileupload', 'src']);
 
   return (
     <Popover
       open={Boolean(anchorEl)}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'right',
-      }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       PaperProps={{ style: { marginTop: -8 } }}
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorEl={anchorEl}

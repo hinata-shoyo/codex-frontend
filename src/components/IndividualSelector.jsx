@@ -46,7 +46,7 @@ export default function IndividualSelector({
       labelId: 'NAME',
       options: {
         customBodyRender: (_, individual) => {
-          const name = individual?.firstName || 'Unnamed individual';
+          const name = individual?.firstName || 'Unnamed individual'; //TODO DEX-1219
           return <Text variant="body2">{name}</Text>;
         },
       },

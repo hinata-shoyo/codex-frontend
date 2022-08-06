@@ -63,7 +63,7 @@ export default function IndividualsButton() {
               const individualGuid = individual?.guid;
               const adoptionName = individual?.adoptionName;
               const defaultName =
-                individual?.firstName || 'Unnamed individual';
+                individual?.firstName || 'Unnamed individual'; //TODO DEX-1219
               const displayString = adoptionName
                 ? `${defaultName} (${adoptionName})`
                 : defaultName;
@@ -71,7 +71,9 @@ export default function IndividualsButton() {
               const createdDate = formatDate(
                 individual?.created,
                 true,
-                intl.formatMessage({ id: 'UNKNOWN_DATE' }),
+                intl.formatMessage({
+                  id: 'UNKNOWN_DATE',
+                }),
               );
 
               return (

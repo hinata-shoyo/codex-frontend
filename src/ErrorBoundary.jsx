@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import { get } from 'lodash-es';
 
 import { withTheme } from '@material-ui/core/styles';
@@ -27,7 +28,7 @@ class ErrorBoundary extends React.Component {
   static getDerivedStateFromError(error) {
     return {
       hasError: true,
-      errorName: get(error, 'name', 'Unnamed Error'),
+      errorName: get(error, 'name', 'Unnamed Error'), //I don't think this ever gets used. May I delete this method?
       errorMessage: get(error, 'message', 'No details available.'),
     };
   }
