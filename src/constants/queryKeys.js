@@ -2,6 +2,7 @@ export default {
   me: 'me',
   settingsConfig: 'settingsConfig',
   settingsSchema: 'settingsSchema',
+  settingsSchema2: 'settingsSchema2',
   siteInfo: 'siteInfo',
   detectionConfig: 'detectionConfig',
   keywords: 'keywords',
