@@ -7,6 +7,5 @@ export default function useSiteSettings() {
     url: '/site-settings/data',
     dataAccessor: result =>
       result?.data?.data?.response?.configuration,
-    queryOptions: {},
   });
 }
