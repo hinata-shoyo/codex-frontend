@@ -11,6 +11,7 @@ import {
   deriveCustomFieldPrefix,
 } from '../constants/bulkReportConstants';
 import categoryTypes from '../../../constants/categoryTypes';
+import fieldTypes from '../../../constants/fieldTypesNew';
 import timePrecisionMap from '../../../constants/timePrecisionMap';
 import useOptions from '../../../hooks/useOptions';
 import sexOptions from '../../../constants/sexOptions';
@@ -66,8 +67,8 @@ export default function useBulkImportFields() {
     return bulkSightingFields.map(f => {
       const additionalProperties = {};
       if (
-        f?.fieldType === 'select' ||
-        f?.fieldType === 'multiselect'
+        f?.fieldType === fieldTypes.select ||
+        f?.fieldType === fieldTypes.multiselect
       ) {
         additionalProperties.type = 'select';
       }
@@ -96,8 +97,8 @@ export default function useBulkImportFields() {
     return bulkEncounterFields.map(f => {
       const additionalProperties = {};
       if (
-        f?.fieldType === 'select' ||
-        f?.fieldType === 'multiselect'
+        f?.fieldType === fieldTypes.select ||
+        f?.fieldType === fieldTypes.multiselect
       ) {
         additionalProperties.type = 'select';
       }
