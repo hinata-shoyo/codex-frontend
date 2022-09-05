@@ -16,6 +16,10 @@ import timePrecisionMap from '../../../constants/timePrecisionMap';
 import useOptions from '../../../hooks/useOptions';
 import sexOptions from '../../../constants/sexOptions';
 import { formatDuplicateLabel } from './bulkImportFormatters';
+import {
+  assetReferencesFieldHook,
+  firstNameFieldHook,
+} from './fieldHooks';
 
 const requiredValidator = {
   validate: 'required',
@@ -55,7 +59,7 @@ function deriveKey(field, categoryType) {
   return prefix + field.id;
 }
 
-export default function useBulkImportFields() {
+export default function useBulkImportFields(assetFilenames) {
   const intl = useIntl();
   const { regionOptions, speciesOptions } = useOptions();
   const sightingFieldSchemas = useSightingFieldSchemas();
@@ -130,10 +134,9 @@ export default function useBulkImportFields() {
       key: 'sightingId',
     },
     {
-      label: intl.formatMessage({
-        id: 'INDIVIDUAL_NAME',
-      }),
+      label: intl.formatMessage({ id: 'INDIVIDUAL_NAME' }),
       key: 'firstName',
+      fieldHook: firstNameFieldHook,
     },
     {
       label: intl.formatMessage({
@@ -156,7 +159,8 @@ export default function useBulkImportFields() {
     {
       label: intl.formatMessage({ id: 'ASSETS' }),
       key: 'assetReferences',
-      validators: [],
+      fieldHook: columnCells =>
+        assetReferencesFieldHook(columnCells, assetFilenames),
     },
     {
       label: intl.formatMessage({ id: 'TIME_YEAR' }),

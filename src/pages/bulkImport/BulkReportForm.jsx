@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FlatfileButton } from '@flatfile/react';
-import { get } from 'lodash-es';
+import { get, omit } from 'lodash-es';
 import { useHistory } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 
@@ -22,11 +22,19 @@ import Text from '../../components/Text';
 import BulkFieldBreakdown from './BulkFieldBreakdown';
 import prepareAssetGroup from './utils/prepareAssetGroup';
 import useBulkImportFields from './utils/useBulkImportFields';
+import { flatfileSchemaOmitList } from './constants/bulkReportConstants';
 import {
   validateMinMax,
   validateIndividualNames,
   validateAssetStrings,
 } from './utils/flatfileValidators';
+
+function getFieldHooks(fields) {
+  return fields.reduce((memo, field) => {
+    if (field.fieldHook) memo[field.key] = field.fieldHook;
+    return memo;
+  }, {});
+}
 
 async function onRecordChange(record, recordIndex, filenames) {
   let messages = validateMinMax(record);
@@ -83,11 +91,12 @@ export default function BulkReportForm({ assetReferences }) {
 
   const { postAssetGroup, loading, error } = usePostAssetGroup();
 
+  const filenames = (assetReferences || []).map(a => a?.path);
   const {
     numEncounterFieldsForFlatFile,
     numSightingFieldsForFlatFile,
     availableFields,
-  } = useBulkImportFields();
+  } = useBulkImportFields(filenames);
   const sightingFieldSchemas = useSightingFieldSchemas();
   const encounterFieldSchemas = useEncounterFieldSchemas();
 
@@ -117,8 +126,6 @@ export default function BulkReportForm({ assetReferences }) {
 
   if (!everythingReadyForFlatfile) return <LoadingScreen />;
 
-  const safeAssetReferences = assetReferences || [];
-  const filenames = safeAssetReferences.map(a => a?.path);
   const flatfileKey = get(siteSettingsData, ['flatfileKey', 'value']);
 
   return (
@@ -155,7 +162,9 @@ export default function BulkReportForm({ assetReferences }) {
               disableManualInput: true,
               title: 'Import sightings data',
               type: 'bulk_import',
-              fields: availableFields,
+              fields: availableFields.map(field =>
+                omit(field, flatfileSchemaOmitList),
+              ),
               styleOverrides: {
                 primaryButtonColor: theme.palette.primary.main,
               },
@@ -167,21 +176,7 @@ export default function BulkReportForm({ assetReferences }) {
             onData={async results => {
               setSightingData(results.data);
             }}
-            fieldHooks={{
-              firstName: async values => {
-                try {
-                  return await validateIndividualNames(values);
-                } catch (e) {
-                  console.error(
-                    'Error validating individual names: ',
-                    e,
-                  );
-                  return [];
-                }
-              },
-              assetReferences: assetStringInputs =>
-                validateAssetStrings(filenames, assetStringInputs),
-            }}
+            fieldHooks={getFieldHooks(availableFields)}
             render={(importer, launch) => (
               <Button
                 style={{ width: 260 }}
