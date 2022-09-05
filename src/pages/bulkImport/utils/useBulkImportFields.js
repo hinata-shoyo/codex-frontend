@@ -20,6 +20,10 @@ import {
   assetReferencesFieldHook,
   firstNameFieldHook,
 } from './fieldHooks';
+import {
+  assetReferencesOnRecordChange,
+  firstNameOnRecordChange,
+} from './recordChangeHandlers';
 
 const requiredValidator = {
   validate: 'required',
@@ -137,6 +141,7 @@ export default function useBulkImportFields(assetFilenames) {
       label: intl.formatMessage({ id: 'INDIVIDUAL_NAME' }),
       key: 'firstName',
       fieldHook: firstNameFieldHook,
+      onRecordChange: firstNameOnRecordChange,
     },
     {
       label: intl.formatMessage({
@@ -161,6 +166,12 @@ export default function useBulkImportFields(assetFilenames) {
       key: 'assetReferences',
       fieldHook: columnCells =>
         assetReferencesFieldHook(columnCells, assetFilenames),
+      onRecordChange: (record, recordIndex) =>
+        assetReferencesOnRecordChange(
+          record,
+          recordIndex,
+          assetFilenames,
+        ),
     },
     {
       label: intl.formatMessage({ id: 'TIME_YEAR' }),

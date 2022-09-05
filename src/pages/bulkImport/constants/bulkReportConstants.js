@@ -41,7 +41,7 @@ export const sightingOmitList = [
 /* Lat and lng are treated as two separate columns here */
 export const encounterOmitList = ['gps', 'specifiedTime'];
 
-export const flatfileSchemaOmitList = ['fieldHook'];
+export const flatfileSchemaOmitList = ['fieldHook', 'onRecordChange'];
 
 export function deriveCustomFieldPrefix(categoryType) {
   return `custom-${categoryType}-`;

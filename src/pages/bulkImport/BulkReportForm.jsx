@@ -23,11 +23,7 @@ import BulkFieldBreakdown from './BulkFieldBreakdown';
 import prepareAssetGroup from './utils/prepareAssetGroup';
 import useBulkImportFields from './utils/useBulkImportFields';
 import { flatfileSchemaOmitList } from './constants/bulkReportConstants';
-import {
-  validateMinMax,
-  validateIndividualNames,
-  validateAssetStrings,
-} from './utils/flatfileValidators';
+import { validateMinMax } from './utils/flatfileValidators';
 
 function getFieldHooks(fields) {
   return fields.reduce((memo, field) => {
@@ -36,43 +32,30 @@ function getFieldHooks(fields) {
   }, {});
 }
 
-async function onRecordChange(record, recordIndex, filenames) {
-  let messages = validateMinMax(record);
+async function onRecordChange(
+  record,
+  recordIndex,
+  recordChangeHandlers,
+) {
+  const minMaxMessages = validateMinMax(record);
 
-  const firstName = record?.firstName;
-  if (firstName) {
-    try {
-      const nameValidationResponse = await validateIndividualNames([
-        [firstName, recordIndex],
-      ]);
-      const nameMessage = get(nameValidationResponse, [0, 0]);
+  const settledHandlerPromises = await Promise.allSettled(
+    (recordChangeHandlers || []).map(recordChangeHandler =>
+      recordChangeHandler(record, recordIndex),
+    ),
+  );
 
-      if (nameMessage) {
-        messages = {
-          ...messages,
-          firstName: nameMessage,
-        };
+  const handlerMessages = settledHandlerPromises.reduce(
+    (memo, settledPromise) => {
+      if (settledPromise.value) {
+        memo = { ...memo, ...settledPromise.value };
       }
-    } catch (e) {
-      console.error(
-        `Error validating individual name "${firstName}" at ${recordIndex}`,
-        e,
-      );
-    }
-  }
+      return memo;
+    },
+    {},
+  );
 
-  const assetString = record?.assetReferences;
-  if (assetString) {
-    const assetValidationResponse = validateAssetStrings(filenames, [
-      [assetString, recordIndex],
-    ]);
-    const assetMessage = get(assetValidationResponse, [0, 0]);
-    if (assetMessage) {
-      messages = { ...messages, assetReferences: assetMessage };
-    }
-  }
-
-  return messages;
+  return { ...minMaxMessages, ...handlerMessages };
 }
 
 function onRecordInit(record) {
@@ -171,7 +154,16 @@ export default function BulkReportForm({ assetReferences }) {
             }}
             onRecordInit={onRecordInit}
             onRecordChange={(record, recordIndex) =>
-              onRecordChange(record, recordIndex, filenames)
+              onRecordChange(
+                record,
+                recordIndex,
+                availableFields.reduce((memo, schema) => {
+                  if (schema.onRecordChange) {
+                    memo.push(schema.onRecordChange);
+                  }
+                  return memo;
+                }, []),
+              )
             }
             onData={async results => {
               setSightingData(results.data);
