@@ -83,3 +83,42 @@ export function validateAssetStrings(filenames, assetStringInputs) {
 
   return validationMessages.filter(message => message);
 }
+
+export function validateMultiselects(validOptions, columnCells) {
+  const validationMessages = columnCells.map(cell => {
+    const [cellValue, rowIndex] = cell;
+
+    const enteredValues = parseAssetString(cellValue);
+    if (enteredValues.length === 0) return null;
+
+    const [matchedValues, unmatchedValues] = partition(
+      enteredValues,
+      value => validOptions.includes(value),
+    );
+
+    const matchedOptionsString = matchedValues.join(', ');
+    const unmatchedOptionsString = unmatchedValues.join(', ');
+    const matchedOptionsMessage = `The following option(s) were found: ${matchedOptionsString}.`;
+    const unmatchedOptionsMessage = ` The following option(s) were not found and will be ignored: ${unmatchedOptionsString}.`;
+
+    let message =
+      matchedValues.length > 0 ? matchedOptionsMessage : '';
+    message = message.concat(
+      unmatchedValues.length > 0 ? unmatchedOptionsMessage : '',
+    );
+
+    const level = unmatchedValues.length > 0 ? 'warning' : 'info';
+
+    const rowMessage = {
+      info: [
+        {
+          message,
+          level,
+        },
+      ],
+    };
+    return [rowMessage, rowIndex];
+  });
+
+  return validationMessages.filter(message => message);
+}

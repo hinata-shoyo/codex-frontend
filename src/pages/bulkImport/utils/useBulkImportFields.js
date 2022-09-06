@@ -19,6 +19,7 @@ import { formatDuplicateLabel } from './bulkImportFormatters';
 import {
   assetReferencesFieldHook,
   firstNameFieldHook,
+  multiselectFieldHook,
 } from './fieldHooks';
 import {
   assetReferencesOnRecordChange,
@@ -74,11 +75,15 @@ export default function useBulkImportFields(assetFilenames) {
     );
     return bulkSightingFields.map(f => {
       const additionalProperties = {};
-      if (
-        f?.fieldType === fieldTypes.select ||
-        f?.fieldType === fieldTypes.multiselect
-      ) {
+      if (f?.fieldType === fieldTypes.select) {
         additionalProperties.type = 'select';
+      }
+      if (f?.fieldType === fieldTypes.multiselect) {
+        additionalProperties.fieldHook = columnCells =>
+          multiselectFieldHook(
+            (f?.choices || []).map(choice => choice?.value),
+            columnCells,
+          );
       }
       if (f?.choices) additionalProperties.options = f.choices;
       if (f.name === 'locationId') {
@@ -104,11 +109,15 @@ export default function useBulkImportFields(assetFilenames) {
     );
     return bulkEncounterFields.map(f => {
       const additionalProperties = {};
-      if (
-        f?.fieldType === fieldTypes.select ||
-        f?.fieldType === fieldTypes.multiselect
-      ) {
+      if (f?.fieldType === fieldTypes.select) {
         additionalProperties.type = 'select';
+      }
+      if (f?.fieldType === fieldTypes.multiselect) {
+        additionalProperties.fieldHook = columnCells =>
+          multiselectFieldHook(
+            (f?.choices || []).map(choice => choice?.value),
+            columnCells,
+          );
       }
       if (f?.choices) additionalProperties.options = f.choices;
       if (f.name === 'taxonomy') {

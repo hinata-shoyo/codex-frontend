@@ -1,6 +1,7 @@
 import {
   validateAssetStrings,
   validateIndividualNames,
+  validateMultiselects,
 } from './flatfileValidators';
 
 export function assetReferencesFieldHook(
@@ -17,4 +18,8 @@ export async function firstNameFieldHook(columnCells) {
     console.error('Error validating individual names: ', e);
     return [];
   }
+}
+
+export function multiselectFieldHook(validOptions, columnCells) {
+  return validateMultiselects(validOptions, columnCells);
 }
