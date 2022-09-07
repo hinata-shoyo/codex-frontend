@@ -4,11 +4,10 @@ import {
   validateMultiselects,
 } from './flatfileValidators';
 
-export function assetReferencesFieldHook(
-  columnCells,
-  assetFilenames,
-) {
-  return validateAssetStrings(assetFilenames, columnCells);
+export function partialAssetFieldHook(assetFilenames) {
+  return function assetFieldHook(columnCells) {
+    return validateAssetStrings(assetFilenames, columnCells);
+  };
 }
 
 export async function firstNameFieldHook(columnCells) {
@@ -20,6 +19,8 @@ export async function firstNameFieldHook(columnCells) {
   }
 }
 
-export function multiselectFieldHook(validOptions, columnCells) {
-  return validateMultiselects(validOptions, columnCells);
+export function partialMultiselectFieldHook(validOptions) {
+  return function multiselectFieldHook(columnCells) {
+    return validateMultiselects(validOptions, columnCells);
+  };
 }

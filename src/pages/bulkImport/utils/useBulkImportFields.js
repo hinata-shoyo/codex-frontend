@@ -17,14 +17,14 @@ import useOptions from '../../../hooks/useOptions';
 import sexOptions from '../../../constants/sexOptions';
 import { formatDuplicateLabel } from './bulkImportFormatters';
 import {
-  assetReferencesFieldHook,
+  partialAssetFieldHook,
   firstNameFieldHook,
-  multiselectFieldHook,
+  partialMultiselectFieldHook,
 } from './fieldHooks';
 import {
-  assetReferencesOnRecordChange,
+  partialAssetOnRecordChange,
   firstNameOnRecordChange,
-  multiselectOnRecordChange,
+  partialMultiselectOnRecordChange,
 } from './recordChangeHandlers';
 
 const requiredValidator = {
@@ -85,15 +85,11 @@ export default function useBulkImportFields(assetFilenames) {
         const validOptions = (f?.choices || []).map(
           choice => choice?.value,
         );
-        additionalProperties.fieldHook = columnCells =>
-          multiselectFieldHook(validOptions, columnCells);
-        additionalProperties.onRecordChange = (record, recordIndex) =>
-          multiselectOnRecordChange(
-            record,
-            recordIndex,
-            key,
-            validOptions,
-          );
+
+        additionalProperties.fieldHook =
+          partialMultiselectFieldHook(validOptions);
+        additionalProperties.onRecordChange =
+          partialMultiselectOnRecordChange(validOptions, key);
       }
       if (f?.choices) additionalProperties.options = f.choices;
       if (f.name === 'locationId') {
@@ -128,15 +124,10 @@ export default function useBulkImportFields(assetFilenames) {
         const validOptions = (f?.choices || []).map(
           choice => choice?.value,
         );
-        additionalProperties.fieldHook = columnCells =>
-          multiselectFieldHook(validOptions, columnCells);
-        additionalProperties.onRecordChange = (record, recordIndex) =>
-          multiselectOnRecordChange(
-            record,
-            recordIndex,
-            key,
-            validOptions,
-          );
+        additionalProperties.fieldHook =
+          partialMultiselectFieldHook(validOptions);
+        additionalProperties.onRecordChange =
+          partialMultiselectOnRecordChange(validOptions, key);
       }
       if (f?.choices) additionalProperties.options = f.choices;
       if (f.name === 'taxonomy') {
@@ -192,14 +183,8 @@ export default function useBulkImportFields(assetFilenames) {
     {
       label: intl.formatMessage({ id: 'ASSETS' }),
       key: 'assetReferences',
-      fieldHook: columnCells =>
-        assetReferencesFieldHook(columnCells, assetFilenames),
-      onRecordChange: (record, recordIndex) =>
-        assetReferencesOnRecordChange(
-          record,
-          recordIndex,
-          assetFilenames,
-        ),
+      fieldHook: partialAssetFieldHook(assetFilenames),
+      onRecordChange: partialAssetOnRecordChange(assetFilenames),
     },
     {
       label: intl.formatMessage({ id: 'TIME_YEAR' }),

@@ -6,21 +6,19 @@ import {
   validateMultiselects,
 } from './flatfileValidators';
 
-export function assetReferencesOnRecordChange(
-  record,
-  recordIndex,
-  filenames,
-) {
-  const assetString = record?.assetReferences;
-  if (!assetString) return null;
+export function partialAssetOnRecordChange(filenames) {
+  return function assetOnRecordChange(record, recordIndex) {
+    const assetString = record?.assetReferences;
+    if (!assetString) return null;
 
-  const assetValidationResponse = validateAssetStrings(filenames, [
-    [assetString, recordIndex],
-  ]);
+    const assetValidationResponse = validateAssetStrings(filenames, [
+      [assetString, recordIndex],
+    ]);
 
-  const assetMessage = get(assetValidationResponse, [0, 0]);
+    const assetMessage = get(assetValidationResponse, [0, 0]);
 
-  return { assetReferences: assetMessage };
+    return { assetReferences: assetMessage };
+  };
 }
 
 export async function firstNameOnRecordChange(record, recordIndex) {
@@ -43,24 +41,21 @@ export async function firstNameOnRecordChange(record, recordIndex) {
   }
 }
 
-export function multiselectOnRecordChange(
-  record,
-  recordIndex,
-  key,
-  validOptions,
-) {
-  const optionString = record?.[key];
-  if (!optionString) return null;
+export function partialMultiselectOnRecordChange(validOptions, key) {
+  return function multiselectOnRecordChange(record, recordIndex) {
+    const optionString = record?.[key];
+    if (!optionString) return null;
 
-  const multiselectValidationResponse = validateMultiselects(
-    validOptions,
-    [[optionString, recordIndex]],
-  );
+    const multiselectValidationResponse = validateMultiselects(
+      validOptions,
+      [[optionString, recordIndex]],
+    );
 
-  const multiselectMessage = get(
-    multiselectValidationResponse,
-    [0, 0],
-  );
+    const multiselectMessage = get(
+      multiselectValidationResponse,
+      [0, 0],
+    );
 
-  return { [key]: multiselectMessage };
+    return { [key]: multiselectMessage };
+  };
 }
