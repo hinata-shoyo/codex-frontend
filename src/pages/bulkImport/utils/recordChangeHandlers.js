@@ -3,6 +3,7 @@ import { get } from 'lodash-es';
 import {
   validateAssetStrings,
   validateIndividualNames,
+  validateMultiselects,
 } from './flatfileValidators';
 
 export function assetReferencesOnRecordChange(
@@ -40,4 +41,26 @@ export async function firstNameOnRecordChange(record, recordIndex) {
     );
     return null;
   }
+}
+
+export function multiselectOnRecordChange(
+  record,
+  recordIndex,
+  key,
+  validOptions,
+) {
+  const optionString = record?.[key];
+  if (!optionString) return null;
+
+  const multiselectValidationResponse = validateMultiselects(
+    validOptions,
+    [[optionString, recordIndex]],
+  );
+
+  const multiselectMessage = get(
+    multiselectValidationResponse,
+    [0, 0],
+  );
+
+  return { [key]: multiselectMessage };
 }

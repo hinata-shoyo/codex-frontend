@@ -24,6 +24,7 @@ import {
 import {
   assetReferencesOnRecordChange,
   firstNameOnRecordChange,
+  multiselectOnRecordChange,
 } from './recordChangeHandlers';
 
 const requiredValidator = {
@@ -75,14 +76,23 @@ export default function useBulkImportFields(assetFilenames) {
     );
     return bulkSightingFields.map(f => {
       const additionalProperties = {};
+      const key = deriveKey(f, categoryTypes.sighting);
+
       if (f?.fieldType === fieldTypes.select) {
         additionalProperties.type = 'select';
       }
       if (f?.fieldType === fieldTypes.multiselect) {
+        const validOptions = (f?.choices || []).map(
+          choice => choice?.value,
+        );
         additionalProperties.fieldHook = columnCells =>
-          multiselectFieldHook(
-            (f?.choices || []).map(choice => choice?.value),
-            columnCells,
+          multiselectFieldHook(validOptions, columnCells);
+        additionalProperties.onRecordChange = (record, recordIndex) =>
+          multiselectOnRecordChange(
+            record,
+            recordIndex,
+            key,
+            validOptions,
           );
       }
       if (f?.choices) additionalProperties.options = f.choices;
@@ -93,7 +103,7 @@ export default function useBulkImportFields(assetFilenames) {
       }
       return {
         label: deriveLabel(f, intl),
-        key: deriveKey(f, categoryTypes.sighting),
+        key,
         ...additionalProperties,
       };
     });
@@ -109,14 +119,23 @@ export default function useBulkImportFields(assetFilenames) {
     );
     return bulkEncounterFields.map(f => {
       const additionalProperties = {};
+      const key = deriveKey(f, categoryTypes.encounter);
+
       if (f?.fieldType === fieldTypes.select) {
         additionalProperties.type = 'select';
       }
       if (f?.fieldType === fieldTypes.multiselect) {
+        const validOptions = (f?.choices || []).map(
+          choice => choice?.value,
+        );
         additionalProperties.fieldHook = columnCells =>
-          multiselectFieldHook(
-            (f?.choices || []).map(choice => choice?.value),
-            columnCells,
+          multiselectFieldHook(validOptions, columnCells);
+        additionalProperties.onRecordChange = (record, recordIndex) =>
+          multiselectOnRecordChange(
+            record,
+            recordIndex,
+            key,
+            validOptions,
           );
       }
       if (f?.choices) additionalProperties.options = f.choices;
@@ -133,7 +152,7 @@ export default function useBulkImportFields(assetFilenames) {
       }
       return {
         label: deriveLabel(f, intl),
-        key: deriveKey(f, categoryTypes.encounter),
+        key,
         ...additionalProperties,
       };
     });
