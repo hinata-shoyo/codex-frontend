@@ -31,7 +31,9 @@ export const notificationTypes = {
     NotificationCollaborationEditRevokeDialog,
   [notificationTypeNames.collaboration_manager_revoke]:
     NotificationCollaborationManagerRevokeDialog,
-  [notificationTypeNames.individual_merge_request]:
+  // [notificationTypeNames.individual_merge_request]:
+  //   NotificationIndividualMergeRequestDialog,
+  [notificationTypeNames.individual_merge_all]:
     NotificationIndividualMergeRequestDialog,
   [notificationTypeNames.individual_merge_complete]:
     NotificationIndividualMergeCompleteDialog,

@@ -8,7 +8,8 @@ export const notificationTypeNames = {
   collaboration_edit_approved: 'collaboration_edit_approved',
   collaboration_edit_revoke: 'collaboration_edit_revoke',
   collaboration_manager_revoke: 'collaboration_manager_revoke',
-  individual_merge_request: 'individual_merge_request',
+  // individual_merge_request: 'individual_merge_request',
+  individual_merge_all: 'individual_merge_all',
   individual_merge_complete: 'individual_merge_complete',
   individual_merge_blocked: 'individual_merge_blocked',
 };
