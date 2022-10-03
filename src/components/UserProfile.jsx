@@ -186,6 +186,7 @@ export default function UserProfile({
             totalSightings={
               resultCount || intl.formatMessage({ id: 'LOADING' })
             }
+            showTotal={true}
             // style={{ position: 'relative' }}
           />
           {!someoneElse && (

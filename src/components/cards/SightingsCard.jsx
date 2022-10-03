@@ -28,6 +28,7 @@ export default function SightingsCard({
   loading,
   totalSightings,
   userId,
+  showTotal = false,
 }) {
   console.log('deleteMe totalSightings is: ');
   console.log(totalSightings);
@@ -166,15 +167,17 @@ export default function SightingsCard({
           linkPath={linkPath}
         />
       )}
-      <div style={{ position: 'absolute', bottom: 10 }}>
-        <Link href={`/sightings-for-user/${userId}`}>
-          <Text
-            variant="caption"
-            id="SEE_ALL_SIGHTINGS"
-            values={{ totalSightings: totalSightings }}
-          ></Text>
-        </Link>
-      </div>
+      {showTotal && (
+        <div style={{ bottom: 10 }}>
+          <Link href={`/sightings-for-user/${userId}`}>
+            <Text
+              variant="caption"
+              id="SEE_ALL_SIGHTINGS"
+              values={{ totalSightings: totalSightings }}
+            ></Text>
+          </Link>
+        </div>
+      )}
     </Card>
   );
 }
