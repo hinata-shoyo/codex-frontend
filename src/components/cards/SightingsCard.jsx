@@ -157,6 +157,7 @@ export default function SightingsCard({
           loading={loading}
           noResultsTextId={noSightingsMsg}
           style={{ marginBottom: 10 }}
+          tableContainerStyles={{ maxHeight: 400 }}
         />
       )}
       {!noSightings && showMapView && (
