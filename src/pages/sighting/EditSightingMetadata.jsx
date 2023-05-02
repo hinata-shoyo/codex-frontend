@@ -51,6 +51,7 @@ export default function EditSightingMetadata({
     ? updateAgsProperties
     : updateSightingProperties;
 
+  console.log("sighting metadata", metadata);
   const [defaultFieldValues, setDefaultFieldValues] = useState({});
 
   const [customFieldValues, setCustomFieldValues] = useState({});

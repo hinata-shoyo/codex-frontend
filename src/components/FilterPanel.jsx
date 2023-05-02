@@ -31,7 +31,6 @@ export default function FilterPanel({
   };
 
   const safeSchemas = schemas || [];
-
   return (
     <div>
       <Text

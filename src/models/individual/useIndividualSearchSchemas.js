@@ -1,9 +1,11 @@
 import useOptions from '../../hooks/useOptions';
 import OptionTermFilter from '../../components/filterFields/OptionTermFilter';
 import SubstringFilter from '../../components/filterFields/SubstringFilter';
+
 import DateRangeFilter from '../../components/filterFields/DateRangeFilter';
 import IntegerFilter from '../../components/filterFields/IntegerFilter';
 import sexOptions from '../../constants/sexOptions';
+import useSocialGroups from '../../models/socialGroups/useSocialGroups';
 
 const labeledSexOptions = sexOptions.map(o => ({
   labelId: o?.filterLabelId || o.labelId,
@@ -29,7 +31,16 @@ const hasAnnotationOptions = [
 ];
 
 export default function useIndividualSearchSchemas() {
-  const { speciesOptions } = useOptions();
+  const { speciesOptions, stageOptions } = useOptions();
+  const { data: socialGroups } = useSocialGroups();
+
+  const socialGroupOptions = socialGroups?.map(data => {
+    return {
+      label: data.name,
+      value: data.guid
+    }
+  });
+
   return [
     {
       id: 'firstName',
@@ -109,6 +120,16 @@ export default function useIndividualSearchSchemas() {
       filterComponentProps: {
         queryTerm: 'num_encounters',
         filterId: 'num_encounters',
+      },
+    },
+    {
+      id: 'socialGroups',
+      labelId: 'SOCIAL_GROUPS',
+      FilterComponent: OptionTermFilter,
+      filterComponentProps: {
+        queryTerm: 'social_groups.guid',
+        filterId: 'socialGroups',
+        choices: socialGroupOptions
       },
     },
   ];

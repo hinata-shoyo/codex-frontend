@@ -33,6 +33,10 @@ export default function SubstringFilter(props) {
     ? intl.formatMessage({ id: labelId })
     : label;
 
+    // console.log("value is: ",value)
+    // console.log("queryTerms is: ",queryTerms);
+    // console.log("filterId is: ",filterId);
+
   return (
     <div
       style={{ display: 'flex', alignItems: 'flex-end', ...style }}

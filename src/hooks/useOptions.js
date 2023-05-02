@@ -3,9 +3,13 @@ import { get } from 'lodash-es';
 
 import { flattenTree } from '../utils/treeUtils';
 import useSiteSettings from '../models/site/useSiteSettings';
+import useSocialGroups from '../models/socialGroups/useSocialGroups';
+
 
 export default function useOptions() {
   const { data, loading, error } = useSiteSettings();
+  const { data: socialGroups } = useSocialGroups();
+  // console.log("socialGroups is ", socialGroups)
 
   return useMemo(() => {
     if (loading || error)
@@ -17,6 +21,17 @@ export default function useOptions() {
       [],
     );
 
+    const pipelineStateOptions = [{label:"preparation", value: "preparation"},
+    {label: "detection", value: "detection"},
+    {label: "curation", value: "curation"},
+    {label: "identification", value: "identification"},
+   ];
+
+   const stageOptions = [{label:"un_reviewed", value: "un_reviewed"},
+    {label: "processed", value: "processed"},
+    {label: "failed", value: "failed"},
+    {label: "identification", value: "identification"},
+   ];   
     const regionOptions = flattenTree(backendRegionOptions).map(
       r => ({
         label: get(r, 'name'),
@@ -40,7 +55,13 @@ export default function useOptions() {
         ],
       }))
       .filter(o => o);
+    const socialGroupOptions = socialGroups?.map(data => {
+      return {
+        label: data.name,
+        value: data.guid
+      }
+    })
 
-    return { regionOptions, speciesOptions };
+    return { regionOptions, speciesOptions, pipelineStateOptions, stageOptions, socialGroupOptions};
   }, [loading, error, data]);
 }

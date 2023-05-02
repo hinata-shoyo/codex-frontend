@@ -38,6 +38,10 @@ const OptionTermFilter = function (props) {
     return get(object, 'label', 'Missing label');
   }
 
+  // console.log("value is: ",value)
+  //   console.log("queryTerm is: ",queryTerm);
+  //   console.log("filterId is: ",filterId);
+
   const showDescription =
     !minimalLabels && (description || descriptionId);
 

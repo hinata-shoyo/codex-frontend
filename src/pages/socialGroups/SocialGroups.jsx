@@ -19,6 +19,7 @@ import AddSocialGroupDialog from './AddSocialGroupDialog';
 
 export default function SocialGroups() {
   const { data, loading, error, statusCode } = useSocialGroups();
+  console.log("social groups", data);
   const {
     mutate: deleteSocialGroup,
     loading: deletePending,
