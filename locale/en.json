@@ -1224,5 +1224,6 @@
   "NUMBER_ENCOUNTERS":"Number of encounters",
   "NUMBER_IMAGES":"Number of images",
   "NUMBER_ANNOTATIONS":"Number of annotations",
-  "PIPELINE_STATE":"Pipeline state"
+  "PIPELINE_STATE":"Pipeline state",
+  "SOCIAL_GROUP_ROLES": "Social group roles"
 }

@@ -3,13 +3,10 @@ import { get } from 'lodash-es';
 
 import { flattenTree } from '../utils/treeUtils';
 import useSiteSettings from '../models/site/useSiteSettings';
-import useSocialGroups from '../models/socialGroups/useSocialGroups';
 
 
 export default function useOptions() {
   const { data, loading, error } = useSiteSettings();
-  const { data: socialGroups } = useSocialGroups();
-  // console.log("socialGroups is ", socialGroups)
 
   return useMemo(() => {
     if (loading || error)
@@ -54,14 +51,15 @@ export default function useOptions() {
           get(o, 'itisTsn', '').toString(),
         ],
       }))
-      .filter(o => o);
-    const socialGroupOptions = socialGroups?.map(data => {
-      return {
-        label: data.name,
-        value: data.guid
-      }
-    })
+      .filter(o => o);    
 
-    return { regionOptions, speciesOptions, pipelineStateOptions, stageOptions, socialGroupOptions};
+    const socialGroupRolesOptions = data['social_group_roles'].value.map(o => {
+      return {
+        label: o.label,
+        value: o.guid
+      }
+    });
+
+    return { regionOptions, speciesOptions, pipelineStateOptions, stageOptions, socialGroupRolesOptions };
   }, [loading, error, data]);
 }

@@ -31,7 +31,7 @@ const hasAnnotationOptions = [
 ];
 
 export default function useIndividualSearchSchemas() {
-  const { speciesOptions, stageOptions } = useOptions();
+  const { speciesOptions, socialGroupRolesOptions } = useOptions();
   const { data: socialGroups } = useSocialGroups();
 
   const socialGroupOptions = socialGroups?.map(data => {
@@ -130,6 +130,16 @@ export default function useIndividualSearchSchemas() {
         queryTerm: 'social_groups.guid',
         filterId: 'socialGroups',
         choices: socialGroupOptions
+      },
+    },
+    {
+      id: 'socialGroupsRoles',
+      labelId: 'SOCIAL_GROUP_ROLES',
+      FilterComponent: OptionTermFilter,
+      filterComponentProps: {
+        queryTerm: 'social_groups.role_guids',
+        filterId: 'socialGroupsRoles',
+        choices: socialGroupRolesOptions
       },
     },
   ];
