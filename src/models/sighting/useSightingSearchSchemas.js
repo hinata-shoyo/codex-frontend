@@ -4,6 +4,7 @@ import SubstringFilter from '../../components/filterFields/SubstringFilter';
 import NumberFilter from '../../components/filterFields/NumberFilter';
 import DateRangeFilter from '../../components/filterFields/DateRangeFilter';
 import useSiteSettings from '../../models/site/useSiteSettings';
+import IntegerFilter from '../../components/filterFields/IntegerFilter';
 
 export default function useSightingSearchSchemas() {
   const { regionOptions, speciesOptions, pipelineStateOptions, stageOptions } = useOptions();
@@ -36,7 +37,7 @@ export default function useSightingSearchSchemas() {
     {
       id: 'numberEncounters',
       labelId: 'NUMBER_ENCOUNTERS',
-      FilterComponent: NumberFilter,
+      FilterComponent: IntegerFilter,
       filterComponentProps: {
         filterId: 'numberEncounters',
         queryTerm: 'numberEncounters',
@@ -45,7 +46,7 @@ export default function useSightingSearchSchemas() {
     {
       id: 'numberImages',
       labelId: 'NUMBER_IMAGES',
-      FilterComponent: NumberFilter,
+      FilterComponent: IntegerFilter,
       filterComponentProps: {
         filterId: 'numberImages',
         queryTerm: 'numberImages',
@@ -54,7 +55,7 @@ export default function useSightingSearchSchemas() {
     {
       id: 'numberAnnotations',
       labelId: 'NUMBER_ANNOTATIONS',
-      FilterComponent: NumberFilter,
+      FilterComponent: IntegerFilter,
       filterComponentProps: {
         filterId: 'numberAnnotations',
         queryTerm: 'numberAnnotations',
