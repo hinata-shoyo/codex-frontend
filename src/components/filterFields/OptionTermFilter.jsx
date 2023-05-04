@@ -9,6 +9,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 
 import Text from '../Text';
+let relationshipRolesOptions = [];
 
 const OptionTermFilter = function (props) {
   const {
@@ -33,14 +34,12 @@ const OptionTermFilter = function (props) {
   const [value, setValue] = useState('');
 
   function getLabel(object) {
-    if (object.labelId)
+    // console.log("object",object)
+    if (object?.labelId)
       return intl.formatMessage({ id: object.labelId });
+    if(!object) console.log("!!!!!!!!!!!", object);
     return get(object, 'label', 'Missing label');
   }
-
-  // console.log("value is: ",value)
-  //   console.log("queryTerm is: ",queryTerm);
-  //   console.log("filterId is: ",filterId);
 
   const showDescription =
     !minimalLabels && (description || descriptionId);
@@ -58,7 +57,7 @@ const OptionTermFilter = function (props) {
         labelId={`${queryTerm}-selector-label`}
         id={`${queryTerm}-selector`}
         onChange={e => {
-          const selectedValue = e.target.value;
+          const selectedValue = e.target.value;                  
           const selectedChoice = safeChoices.find(
             c => c.value === selectedValue,
           );
@@ -80,15 +79,19 @@ const OptionTermFilter = function (props) {
               query: {
                 [queryType]: { [queryTerm]: choiceValue },
               },
+              selectedChoice,
             });
           }
         }}
         value={value}
         renderValue={currentValue => {
+          if(!currentValue) {
+            return '';
+          }
           const selectedChoice = safeChoices.find(
             c => c.value === currentValue,
           );
-          return getLabel(selectedChoice);
+          return getLabel(selectedChoice) || '';
         }}
         {...rest}
       >
@@ -117,5 +120,5 @@ const OptionTermFilter = function (props) {
     </FormControl>
   );
 };
-
+// export {relationshipRolesOptions};
 export default memo(OptionTermFilter);

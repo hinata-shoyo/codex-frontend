@@ -1,13 +1,16 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { get } from 'lodash-es';
 
 import { flattenTree } from '../utils/treeUtils';
 import useSiteSettings from '../models/site/useSiteSettings';
+import { convertRowsPropToState } from '@material-ui/data-grid';
 
+// import {relationshipRolesOptions} from '../components/filterFields/OptionTermFilter';
 
 export default function useOptions() {
   const { data, loading, error } = useSiteSettings();
-
+  const [ options, setOpt ] = useState([]);
+  // console.log("data: ",data);
   return useMemo(() => {
     if (loading || error)
       return { regionOptions: [], speciesOptions: [] };
@@ -60,6 +63,31 @@ export default function useOptions() {
       }
     });
 
-    return { regionOptions, speciesOptions, pipelineStateOptions, stageOptions, socialGroupRolesOptions };
+    const relationshipOptions = Object.values(data['relationship_type_roles'].value).map(o => {
+      return {
+        label: o.label,
+        value: o.guid,
+        roles: o.roles
+      }
+    });
+
+    // console.log("data['relationship_type_roles'].value",data['relationship_type_roles'].value[guid])
+    // const options1 = relationshipRolesOptions.map(data => {
+    //   return {
+    //     label: data.label,
+    //     value: data.guid
+    //   }
+    // })
+
+    // setOpt(options1);
+    
+    // const op = options1?.map(data => {
+    //   return {
+    //     label: data.label,
+    //     value: data.guid
+    //   }
+    // })
+
+    return { regionOptions, speciesOptions, pipelineStateOptions, stageOptions, socialGroupRolesOptions, relationshipOptions };
   }, [loading, error, data]);
 }

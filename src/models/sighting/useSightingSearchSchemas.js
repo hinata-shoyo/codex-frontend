@@ -1,7 +1,6 @@
 import useOptions from '../../hooks/useOptions';
 import OptionTermFilter from '../../components/filterFields/OptionTermFilter';
 import SubstringFilter from '../../components/filterFields/SubstringFilter';
-import NumberFilter from '../../components/filterFields/NumberFilter';
 import DateRangeFilter from '../../components/filterFields/DateRangeFilter';
 import useSiteSettings from '../../models/site/useSiteSettings';
 import IntegerFilter from '../../components/filterFields/IntegerFilter';

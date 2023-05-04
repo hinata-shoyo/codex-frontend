@@ -58,7 +58,6 @@ export default function RelationshipEditor({
   function setRelationships(relationships) {
     setFormSettings({ ...formSettings, relationships });
   }
-
   const relationships = get(formSettings, ['relationships'], {});
 
   return (

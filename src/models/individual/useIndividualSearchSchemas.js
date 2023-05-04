@@ -1,6 +1,6 @@
 import useOptions from '../../hooks/useOptions';
 import OptionTermFilter from '../../components/filterFields/OptionTermFilter';
-import OptionTermFilter1, {relationshipRolesOptions} from '../../components/filterFields/newFilter';
+// import OptionTermFilter1, {relationshipRolesOptions} from '../../components/filterFields/newFilter';
 
 import SubstringFilter  from '../../components/filterFields/SubstringFilter';
 import DateRangeFilter from '../../components/filterFields/DateRangeFilter';
@@ -14,8 +14,6 @@ const labeledSexOptions = sexOptions.map(o => ({
   labelId: o?.filterLabelId || o.labelId,
   value: o.value,
 }));
-
-
 
 const hasAnnotationOptions = [
   {
@@ -36,7 +34,7 @@ const hasAnnotationOptions = [
 ];
 
 export default function useIndividualSearchSchemas() {
-  const { speciesOptions, socialGroupRolesOptions, relationshipOptions } = useOptions();
+  const { speciesOptions, socialGroupRolesOptions, relationshipOptions, op } = useOptions();
   const { data: socialGroups } = useSocialGroups();
   const { data: siteSettings } = useSiteSettings();
   const customIndividualFields = siteSettings['site.custom.customFields.Individual'].value.definitions;
@@ -46,12 +44,20 @@ export default function useIndividualSearchSchemas() {
       value: data.guid
     }
   });
+  const [relationshipRolesOptions, setRelationshipRolesOptions] = useState([{
+    label: "infant", 
+    guid: "73e0600f-c364-4065-a51d-fc3ef2ae08f6"
+  }]);
 
-  console.log("--------------------",relationshipOptions);
-  const rel1 = relationshipOptions;
-  console.log("--------------------",rel1);
 
-  // const [relationshipRolesOptions, setRelationshipRolesOptions] = useState([]);
+  // console.log("relationshipRolesOptions",relationshipRolesOptions);
+  // const options = relationshipRolesOptions?.map(data => {
+  //   return {
+  //     label: data.label,
+  //     value: data.guid
+  //   }
+  // })
+  // console.log("new options",options);
   const customFields = customIndividualFields.map(data => {
     // return {
     //   id: data.name,
@@ -149,21 +155,22 @@ export default function useIndividualSearchSchemas() {
     {
       id: 'relationship',
       labelId: 'RELATIONSHIP',
-      FilterComponent: OptionTermFilter1,
+      FilterComponent: OptionTermFilter,
       filterComponentProps: {
         queryTerm: 'relationships.type_guid',
         filterId: 'relationship',
-        choices: relationshipOptions, 
+        choices: relationshipOptions,         
         }            
     },
     {
       id: 'relationshipRoles',
       labelId: 'RELATIONSHIP_ROLES',
+      dependency: 'relationship',
       FilterComponent: OptionTermFilter,
       filterComponentProps: {
         queryTerm: 'relationships.role_guid',
         filterId: 'relationshipRoles',
-        choices: relationshipRolesOptions,
+        choices: op,
       },
     },
     {
