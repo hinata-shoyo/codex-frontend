@@ -76,15 +76,19 @@ const OptionTermFilter = function (props) {
               query: {
                 [queryType]: { [queryTerm]: choiceValue },
               },
+              selectedChoice,
             });
           }
         }}
         value={value}
         renderValue={currentValue => {
+          if(!currentValue) {
+            return '';
+          }
           const selectedChoice = safeChoices.find(
             c => c.value === currentValue,
           );
-          return getLabel(selectedChoice);
+          return getLabel(selectedChoice) || '';
         }}
         {...rest}
       >
