@@ -9,6 +9,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 
 import Text from '../Text';
+import { intelligentAgentSchema } from '../../constants/intelligentAgentSchema';
 
 const OptionTermFilter = function (props) {
   const {
@@ -33,17 +34,25 @@ const OptionTermFilter = function (props) {
   const [value, setValue] = useState('');
 
   function getLabel(object) {
-    if (object.labelId)
+    if (object?.labelId){
       return intl.formatMessage({ id: object.labelId });
+    }      
     return get(object, 'label', 'Missing label');
   }
 
   const showDescription =
     !minimalLabels && (description || descriptionId);
 
+  // const translatedLabel = labelId
+  //   ? intl.formatMessage({ id: labelId })
+  //   : label;
+
   const translatedLabel = labelId
-    ? intl.formatMessage({ id: labelId })
-    : label;
+  ?   (intl.messages[labelId]
+       ? intl.formatMessage({ id: labelId })
+       : labelId )
+  : label;     
+
 
   const safeChoices = choices || [];
 
@@ -58,6 +67,7 @@ const OptionTermFilter = function (props) {
           const selectedChoice = safeChoices.find(
             c => c.value === selectedValue,
           );
+          console.log(`selectedChoise is ${selectedChoice}`)
           const choiceLabel = getLabel(selectedChoice);
           const choiceValue = get(
             selectedChoice,

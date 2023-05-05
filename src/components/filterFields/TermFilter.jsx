@@ -25,9 +25,15 @@ export default function TermFilter(props) {
   const showDescription = !minimalLabels && description;
 
   const [value, setValue] = useState('');
+  // const translatedLabel = labelId
+  //   ? intl.formatMessage({ id: labelId })
+  //   : label;
+
   const translatedLabel = labelId
-    ? intl.formatMessage({ id: labelId })
-    : label;
+  ?   (intl.messages[labelId]
+       ? intl.formatMessage({ id: labelId })
+       : labelId )
+  : label; 
 
   return (
     <FormControl style={style}>

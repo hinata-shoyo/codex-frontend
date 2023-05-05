@@ -49,9 +49,11 @@ export default function IntegerFilter({
   ...rest
 }) {
   const intl = useIntl();
-  const fieldLabel = labelId
-    ? intl.formatMessage({ id: labelId })
-    : label;
+  const fieldLabel = labelId    
+    ?   (intl.messages[labelId]
+         ? intl.formatMessage({ id: labelId })
+         : labelId )
+    : label; 
 
   const [integerInput, setIntegerInput] = useState('');
   const [comparator, setComparator] = useState('gt');

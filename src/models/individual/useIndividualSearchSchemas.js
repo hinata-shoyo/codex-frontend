@@ -1,5 +1,6 @@
 import useOptions from '../../hooks/useOptions';
 import OptionTermFilter from '../../components/filterFields/OptionTermFilter';
+import TermFilter from '../../components/filterFields/TermFilter';
 import SubstringFilter from '../../components/filterFields/SubstringFilter';
 import DateRangeFilter from '../../components/filterFields/DateRangeFilter';
 import IntegerFilter from '../../components/filterFields/IntegerFilter';
@@ -34,13 +35,27 @@ export default function useIndividualSearchSchemas() {
   const { speciesOptions, socialGroupRolesOptions, relationshipOptions, op } = useOptions();
   const { data: socialGroups } = useSocialGroups();
   const { data: siteSettings } = useSiteSettings();
-  // const customIndividualFields = siteSettings['site.custom.customFields.Individual'].value.definitions;
+  const customIndividualFields = siteSettings['site.custom.customFields.Individual'].value.definitions;
   const socialGroupOptions = socialGroups?.map(data => {
     return {
       label: data.name,
       value: data.guid
     }
   });
+  console.log(`customIndividualFields :`, customIndividualFields);
+  const customFields = customIndividualFields.map(data => {
+    console.log('data.schema.displayType', data.schema.displayType);
+    return {
+      id: data.name,
+      labelId: data.name,
+      FilterComponent: TermFilter,
+      filterComponentProps: {
+        filterId: data.name,
+        queryTerm: [data.id],
+        choices: data.schema.choices,
+    },
+    }
+  })
   return [
     {
       id: 'firstName',
@@ -145,7 +160,7 @@ export default function useIndividualSearchSchemas() {
     },
     {
       id: 'socialGroups',
-      labelId: 'SOCIAL_GROUPS',
+      labelId: 'SOCIAL_GROUPS',      
       FilterComponent: OptionTermFilter,
       filterComponentProps: {
         queryTerm: 'social_groups.guid',
@@ -155,13 +170,15 @@ export default function useIndividualSearchSchemas() {
     },
     {
       id: 'socialGroupsRoles',
-      labelId: 'SOCIAL_GROUP_ROLES',
+      labelId: 'SOCIAL_GROUP_ROLES',      
       FilterComponent: OptionTermFilter,
       filterComponentProps: {
+        customField: "social_group_roles",
         queryTerm: 'social_groups.role_guids',
         filterId: 'socialGroupsRoles',
         choices: socialGroupRolesOptions
       },
     },
+    ...customFields
   ];
 }
